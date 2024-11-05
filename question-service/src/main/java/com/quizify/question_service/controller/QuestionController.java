@@ -3,10 +3,13 @@ package com.quizify.question_service.controller;
 import com.quizify.question_service.dto.common.PageResponse;
 import com.quizify.question_service.dto.question.QuestionRequest;
 import com.quizify.question_service.dto.question.QuestionResponse;
+import com.quizify.question_service.model.Question;
 import com.quizify.question_service.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("questions")
@@ -79,6 +82,15 @@ public class QuestionController {
             @RequestParam(name = "topic") String topic
     ) {
         return ResponseEntity.ok(questionService.getAllQuestionsBySubjectAndTopic(page, size, subject, topic));
+    }
+
+    @GetMapping("/limited-questions")
+    public ResponseEntity<List<Question>> getNQuestionsBySubjectAndTopic(
+            @RequestParam(name = "subject") String subject,
+            @RequestParam(name = "topic") String topic,
+            @RequestParam(name = "noOfQuestions") Integer noOfQuestions
+    ) {
+        return ResponseEntity.ok(questionService.getNQuestionsBySubjectAndTopic(subject, topic, noOfQuestions));
     }
 
 

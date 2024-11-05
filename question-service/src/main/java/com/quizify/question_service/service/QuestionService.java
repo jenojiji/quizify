@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -88,7 +89,7 @@ public class QuestionService {
 
     public PageResponse<QuestionResponse> getAllQuestionsBySubjectAndTopic(int page, int size, String subject, String topic) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Question> questions = questionRepository.findAllQuestionsBySubjectAndTopic(pageable,subject, topic);
+        Page<Question> questions = questionRepository.findAllQuestionsBySubjectAndTopic(pageable, subject, topic);
         List<QuestionResponse> questionResponses = questions.stream()
                 .map(questionMapper::toQuestionResponse)
                 .toList();
@@ -101,5 +102,16 @@ public class QuestionService {
                 questions.isFirst(),
                 questions.isLast()
         );
+    }
+
+    public List<Question> getNQuestionsBySubjectAndTopic(String subject, String topic, Integer noOfQuestions) {
+        Optional<List<Question>> OptionalQuestions = questionRepository.findSpecificNoOfQuestions(subject, topic, noOfQuestions);
+        List<Question> questions;
+        if (OptionalQuestions.isPresent()) {
+            questions = OptionalQuestions.get();
+        } else {
+            throw new RuntimeException("Questions object is null");
+        }
+        return questions;
     }
 }
