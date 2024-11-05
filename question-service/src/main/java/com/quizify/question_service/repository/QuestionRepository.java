@@ -20,4 +20,12 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             WHERE question.topic=:topic
             """)
     Page<Question> findAllQuestionsByTopic(Pageable pageable, String topic);
+
+    @Query("""
+            SELECT question
+            FROM Question question
+            WHERE question.subject=:subject
+            AND question.topic=:topic
+            """)
+    Page<Question> findAllQuestionsBySubjectAndTopic(Pageable pageable, String subject, String topic);
 }

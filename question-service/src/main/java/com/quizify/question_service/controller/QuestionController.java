@@ -59,7 +59,7 @@ public class QuestionController {
             @RequestParam(name = "size", defaultValue = "10", required = false) int size,
             @RequestParam(name = "subject") String subject
     ) {
-        return ResponseEntity.ok(questionService.getAllQuestionsBySubject(page,size,subject));
+        return ResponseEntity.ok(questionService.getAllQuestionsBySubject(page, size, subject));
     }
 
     @GetMapping("/by-topic")
@@ -68,7 +68,17 @@ public class QuestionController {
             @RequestParam(name = "size", defaultValue = "10", required = false) int size,
             @RequestParam(name = "topic") String topic
     ) {
-        return ResponseEntity.ok(questionService.getAllQuestionsByTopic(page,size,topic));
+        return ResponseEntity.ok(questionService.getAllQuestionsByTopic(page, size, topic));
+    }
+
+    @GetMapping("/by-subject-and-topic")
+    public ResponseEntity<PageResponse<QuestionResponse>> getAllQuestionsBySubjectAndTopic(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            @RequestParam(name = "subject") String subject,
+            @RequestParam(name = "topic") String topic
+    ) {
+        return ResponseEntity.ok(questionService.getAllQuestionsBySubjectAndTopic(page, size, subject, topic));
     }
 
 

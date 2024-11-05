@@ -85,4 +85,21 @@ public class QuestionService {
                 questions.isLast()
         );
     }
+
+    public PageResponse<QuestionResponse> getAllQuestionsBySubjectAndTopic(int page, int size, String subject, String topic) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Question> questions = questionRepository.findAllQuestionsBySubjectAndTopic(pageable,subject, topic);
+        List<QuestionResponse> questionResponses = questions.stream()
+                .map(questionMapper::toQuestionResponse)
+                .toList();
+        return new PageResponse<>(
+                questionResponses,
+                page,
+                size,
+                questions.getTotalElements(),
+                questions.getTotalPages(),
+                questions.isFirst(),
+                questions.isLast()
+        );
+    }
 }
