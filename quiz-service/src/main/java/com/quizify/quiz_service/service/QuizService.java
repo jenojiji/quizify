@@ -1,10 +1,13 @@
 package com.quizify.quiz_service.service;
 
+import com.quizify.quiz_service.config.QuestionServiceClient;
+import com.quizify.quiz_service.dto.common.Question;
 import com.quizify.quiz_service.dto.quiz.QuizRequest;
 import com.quizify.quiz_service.dto.quiz.QuizResponse;
 import com.quizify.quiz_service.model.Quiz;
 import com.quizify.quiz_service.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,17 +25,25 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
     private final RestTemplate restTemplate;
+    @Autowired
+    QuestionServiceClient questionServiceClient;
 
 
     public QuizResponse createQuiz(QuizRequest request) {
 
-        List<Map<String, Object>> questions = fetchQuestionsFromQuestionService(
-                request.getSubject(),
+//        List<Map<String, Object>> questions = fetchQuestionsFromQuestionService(
+//                request.getSubject(),
+//                request.getTopic(),
+//                request.getNoOfQuestions()
+//        );
+
+        List<Question> questions = questionServiceClient.getNQuestionsBySubjectAndTopic(request.getSubject(),
                 request.getTopic(),
-                request.getNoOfQuestions()
-        );
+                request.getNoOfQuestions());
+
+
         List<Integer> quesIdsList = questions.stream()
-                .map(question -> (Integer) question.get("quesId"))
+                .map(Question::getQuesId)
                 .collect(Collectors.toList());
 
 
