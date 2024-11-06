@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Question {
+    private Integer quesId;
     private String quesDesc;
     private String optionOne;
     private String optionTwo;
