@@ -85,12 +85,12 @@ public class QuestionController {
     }
 
     @GetMapping("/limited-questions")
-    public ResponseEntity<List<Question>> getNQuestionsBySubjectAndTopic(
+    public List<Question> getNQuestionsBySubjectAndTopic(
             @RequestParam(name = "subject") String subject,
             @RequestParam(name = "topic") String topic,
             @RequestParam(name = "noOfQuestions") Integer noOfQuestions
     ) {
-        return ResponseEntity.ok(questionService.getNQuestionsBySubjectAndTopic(subject, topic, noOfQuestions));
+        return questionService.getNQuestionsBySubjectAndTopic(subject, topic, noOfQuestions);
     }
 
 

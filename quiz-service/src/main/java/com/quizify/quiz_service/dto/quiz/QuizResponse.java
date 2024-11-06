@@ -1,6 +1,9 @@
 package com.quizify.quiz_service.dto.quiz;
 
+import com.quizify.quiz_service.dto.common.Question;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +18,7 @@ public class QuizResponse {
 
     private String subject;
     private String topic;
-
+    private List<Integer> questionIds;
+    private List<Question> questions;
 
 }

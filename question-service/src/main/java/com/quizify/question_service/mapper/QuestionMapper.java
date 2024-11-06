@@ -12,6 +12,7 @@ public class QuestionMapper {
 
     public QuestionResponse toQuestionResponse(Question question) {
         return QuestionResponse.builder()
+                .quesId(question.getQuesId())
                 .quesDesc(question.getQuesDesc())
                 .optionOne(question.getOptionOne())
                 .optionTwo(question.getOptionTwo())
