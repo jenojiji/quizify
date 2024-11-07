@@ -1,0 +1,15 @@
+spring:
+  application:
+  name: api-gateway
+
+  server:
+    port:8765
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        id: question-service
+        predicates:
